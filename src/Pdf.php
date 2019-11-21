@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\PdfToImage;
+namespace Offspring\PdfToImage;
 
 use Imagick;
-use Spatie\PdfToImage\Exceptions\InvalidFormat;
-use Spatie\PdfToImage\Exceptions\PdfDoesNotExist;
-use Spatie\PdfToImage\Exceptions\PageDoesNotExist;
-use Spatie\PdfToImage\Exceptions\InvalidLayerMethod;
+use Offspring\PdfToImage\Exceptions\InvalidFormat;
+use Offspring\PdfToImage\Exceptions\PdfDoesNotExist;
+use Offspring\PdfToImage\Exceptions\PageDoesNotExist;
+use Offspring\PdfToImage\Exceptions\InvalidLayerMethod;
 
 class Pdf
 {
@@ -33,7 +33,7 @@ class Pdf
     /**
      * @param string $pdfFile The path or url to the pdffile.
      *
-     * @throws \Spatie\PdfToImage\Exceptions\PdfDoesNotExist
+     * @throws \Offspring\PdfToImage\Exceptions\PdfDoesNotExist
      */
     public function __construct($pdfFile)
     {
@@ -69,7 +69,7 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Spatie\PdfToImage\Exceptions\InvalidFormat
+     * @throws \Offspring\PdfToImage\Exceptions\InvalidFormat
      */
     public function setOutputFormat($outputFormat)
     {
@@ -101,7 +101,7 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Spatie\PdfToImage\Exceptions\InvalidLayerMethod
+     * @throws \Offspring\PdfToImage\Exceptions\InvalidLayerMethod
      *
      * @see https://secure.php.net/manual/en/imagick.constants.php
      * @see Pdf::getImageData()
@@ -139,7 +139,7 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Spatie\PdfToImage\Exceptions\PageDoesNotExist
+     * @throws \Offspring\PdfToImage\Exceptions\PageDoesNotExist
      */
     public function setPage($page)
     {

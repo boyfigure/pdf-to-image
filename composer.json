@@ -1,38 +1,37 @@
 {
-    "name": "spatie/pdf-to-image",
+    "name": "offspring/pdf-to-image",
     "description": "Convert a pdf to an image",
     "keywords": [
-        "spatie",
+        "offspring",
         "pdf-to-image",
         "pdf",
         "convert",
         "image"
     ],
-    "homepage": "https://github.com/spatie/pdf-to-image",
+    "homepage": "https://github.com/boyfigure/pdf-to-image",
     "license": "MIT",
     "authors": [
         {
-            "name": "Freek Van der Herten",
-            "email": "freek@spatie.be",
-            "homepage": "https://spatie.be",
+            "name": "Tony",
+            "email": "tony@offspring.com",
+            "homepage": "https://offspring.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php" : "^7.0",
-        "ext-imagick" : "*"
+        "php" : "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit" : "^6.2"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\PdfToImage\\": "src"
+            "Offspring\\PdfToImage\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\PdfToImage\\Test\\": "tests"
+            "Offspring\\PdfToImage\\Test\\": "tests"
         }
     },
     "scripts": {

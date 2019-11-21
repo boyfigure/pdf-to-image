@@ -1,15 +1,15 @@
 # Convert a pdf to an image
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/pdf-to-image.svg?style=flat-square)](https://packagist.org/packages/spatie/pdf-to-image)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/offspring/pdf-to-image.svg?style=flat-square)](https://packagist.org/packages/offspring/pdf-to-image)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/spatie/pdf-to-image/master.svg?style=flat-square)](https://travis-ci.org/spatie/pdf-to-image)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/pdf-to-image.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/pdf-to-image)
+[![Build Status](https://img.shields.io/travis/offspring/pdf-to-image/master.svg?style=flat-square)](https://travis-ci.org/offspring/pdf-to-image)
+[![Quality Score](https://img.shields.io/scrutinizer/g/offspring/pdf-to-image.svg?style=flat-square)](https://scrutinizer-ci.com/g/offspring/pdf-to-image)
 [![StyleCI](https://styleci.io/repos/38419604/shield?branch=master)](https://styleci.io/repos/38419604)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/pdf-to-image.svg?style=flat-square)](https://packagist.org/packages/spatie/pdf-to-image)
+[![Total Downloads](https://img.shields.io/packagist/dt/offspring/pdf-to-image.svg?style=flat-square)](https://packagist.org/packages/offspring/pdf-to-image)
 
 This package provides an easy to work with class to convert pdf's to images.
 
-Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+Offspring is a webdesign agency in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://offspring.be/opensource).
 
 ## Requirements
 
@@ -19,7 +19,7 @@ You should have [Imagick](http://php.net/manual/en/imagick.setresolution.php) an
 
 The package can be installed via composer:
 ``` bash
-$ composer require spatie/pdf-to-image
+$ composer require offspring/pdf-to-image
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ $ composer require spatie/pdf-to-image
 Converting a pdf to an image is easy.
 
 ```php
-$pdf = new Spatie\PdfToImage\Pdf($pathToPdf);
+$pdf = new Offspring\PdfToImage\Pdf($pathToPdf);
 $pdf->saveImage($pathToWhereImageShouldBeStored);
 ```
 
@@ -92,26 +92,26 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you discover any security related issues, please email freek@offspring.be instead of using the issue tracker.
 
 ## Postcardware
 
 You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
+Our address is: Offspring, Samberstraat 69D, 2060 Antwerp, Belgium.
 
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
+We publish all received postcards [on our company website](https://offspring.be/en/opensource/postcards).
 
 ## Credits
 
-- [Freek Van der Herten](https://github.com/spatie)
+- [Freek Van der Herten](https://github.com/offspring)
 - [All Contributors](../../contributors)
 
 ## Support us
 
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+Offspring is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://offspring.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/offspring). 
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
