@@ -1,6 +1,6 @@
 <?php
 
-namespace Offspring\PdfToImage\Exceptions;
+namespace Offspring\FileToThumbnail\Exceptions;
 
 use Exception;
 

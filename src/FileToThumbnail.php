@@ -1,16 +1,16 @@
 <?php
 
-namespace Offspring\PdfToImage;
+namespace Offspring\FileToThumbnail;
 
 use Imagick;
-use Offspring\PdfToImage\Exceptions\InvalidFormat;
-use Offspring\PdfToImage\Exceptions\PdfDoesNotExist;
-use Offspring\PdfToImage\Exceptions\PageDoesNotExist;
-use Offspring\PdfToImage\Exceptions\InvalidLayerMethod;
+use Offspring\FileToThumbnail\Exceptions\InvalidFormat;
+use Offspring\FileToThumbnail\Exceptions\FileDoesNotExist;
+use Offspring\FileToThumbnail\Exceptions\PageDoesNotExist;
+use Offspring\FileToThumbnail\Exceptions\InvalidLayerMethod;
 
-class Pdf
+class FileToThumbnail
 {
-    protected $pdfFile;
+    protected $file;
 
     protected $resolution = 144;
 
@@ -30,22 +30,26 @@ class Pdf
 
     protected $compressionQuality;
 
+    protected $thumbnail_height = 0;
+
+    protected $thumbnail_width = 0;
+
     /**
-     * @param string $pdfFile The path or url to the pdffile.
+     * @param string $file The path or url to the file.
      *
-     * @throws \Offspring\PdfToImage\Exceptions\PdfDoesNotExist
+     * @throws \Offspring\FileToThumbnail\Exceptions\FileDoesNotExist
      */
-    public function __construct($pdfFile)
+    public function __construct($file)
     {
-        if (! filter_var($pdfFile, FILTER_VALIDATE_URL) && ! file_exists($pdfFile)) {
-            throw new PdfDoesNotExist("File `{$pdfFile}` does not exist");
+        if (! filter_var($file, FILTER_VALIDATE_URL) && ! file_exists($file)) {
+            throw new FileDoesNotExist("File `{$file}` does not exist");
         }
 
-        $this->imagick = new Imagick($pdfFile);
+        $this->imagick = new Imagick($file);
 
         $this->numberOfPages = $this->imagick->getNumberImages();
 
-        $this->pdfFile = $pdfFile;
+        $this->file = $file;
     }
 
     /**
@@ -69,7 +73,7 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Offspring\PdfToImage\Exceptions\InvalidFormat
+     * @throws \Offspring\FileToThumbnail\Exceptions\InvalidFormat
      */
     public function setOutputFormat($outputFormat)
     {
@@ -101,10 +105,10 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Offspring\PdfToImage\Exceptions\InvalidLayerMethod
+     * @throws \Offspring\FileToThumbnail\Exceptions\InvalidLayerMethod
      *
      * @see https://secure.php.net/manual/en/imagick.constants.php
-     * @see Pdf::getImageData()
+     * @see FileToThumbnail::getImageData()
      */
     public function setLayerMethod($layerMethod)
     {
@@ -139,7 +143,7 @@ class Pdf
      *
      * @return $this
      *
-     * @throws \Offspring\PdfToImage\Exceptions\PageDoesNotExist
+     * @throws \Offspring\FileToThumbnail\Exceptions\PageDoesNotExist
      */
     public function setPage($page)
     {
@@ -153,7 +157,7 @@ class Pdf
     }
 
     /**
-     * Get the number of pages in the pdf file.
+     * Get the number of pages in the file.
      *
      * @return int
      */
@@ -232,11 +236,16 @@ class Pdf
             $this->imagick->setCompressionQuality($this->compressionQuality);
         }
 
-        if (filter_var($this->pdfFile, FILTER_VALIDATE_URL)) {
+        if (filter_var($this->file, FILTER_VALIDATE_URL)) {
             return $this->getRemoteImageData($pathToImage);
         }
 
-        $this->imagick->readImage(sprintf('%s[%s]', $this->pdfFile, $this->page - 1));
+        if($this->thumbnail_width != 0 && $this->thumbnail_height != 0){
+            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, false);
+        }
+
+
+        $this->imagick->readImage(sprintf('%s[%s]', $this->file, $this->page - 1));
 
         if (is_int($this->layerMethod)) {
             $this->imagick = $this->imagick->mergeImageLayers($this->layerMethod);
@@ -280,7 +289,7 @@ class Pdf
      */
     protected function getRemoteImageData($pathToImage)
     {
-        $this->imagick->readImage($this->pdfFile);
+        $this->imagick->readImage($this->file);
 
         $this->imagick->setIteratorIndex($this->page - 1);
 

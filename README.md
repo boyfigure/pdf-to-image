@@ -27,7 +27,7 @@ $ composer require offspring/pdf-to-image
 Converting a pdf to an image is easy.
 
 ```php
-$pdf = new Offspring\PdfToImage\Pdf($pathToPdf);
+$pdf = new Offspring\FileToThumbnail\FileToThumbnail($pathToPdf);
 $pdf->saveImage($pathToWhereImageShouldBeStored);
 ```
 

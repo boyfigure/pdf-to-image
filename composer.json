@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Offspring\\PdfToImage\\": "src"
+            "Offspring\\FileToThumbnail\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Offspring\\PdfToImage\\Test\\": "tests"
+            "Offspring\\FileToThumbnail\\Test\\": "tests"
         }
     },
     "scripts": {

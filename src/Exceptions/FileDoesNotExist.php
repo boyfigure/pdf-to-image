@@ -4,6 +4,7 @@ namespace Offspring\FileToThumbnail\Exceptions;
 
 use Exception;
 
-class InvalidLayerMethod extends Exception
+class FileDoesNotExist extends Exception
 {
+
 }
