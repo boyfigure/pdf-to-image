@@ -41,7 +41,7 @@ class FileToThumbnail
      */
     public function __construct($file)
     {
-        if (! filter_var($file, FILTER_VALIDATE_URL) && ! file_exists($file)) {
+        if (!filter_var($file, FILTER_VALIDATE_URL) && !file_exists($file)) {
             throw new FileDoesNotExist("File `{$file}` does not exist");
         }
 
@@ -77,7 +77,7 @@ class FileToThumbnail
      */
     public function setOutputFormat($outputFormat)
     {
-        if (! $this->isValidOutputFormat($outputFormat)) {
+        if (!$this->isValidOutputFormat($outputFormat)) {
             throw new InvalidFormat("Format {$outputFormat} is not supported");
         }
 
@@ -120,6 +120,15 @@ class FileToThumbnail
         }
 
         $this->layerMethod = $layerMethod;
+
+        return $this;
+    }
+
+    public function setThumbnail($with, $height)
+    {
+        $this->thumbnail_height = $height;
+
+        $this->thumbnail_width = $with;
 
         return $this;
     }
@@ -176,13 +185,21 @@ class FileToThumbnail
     public function saveImage($pathToImage)
     {
         if (is_dir($pathToImage)) {
-            $pathToImage = rtrim($pathToImage, '\/').DIRECTORY_SEPARATOR.$this->page.'.'.$this->outputFormat;
+            $pathToImage = rtrim($pathToImage, '\/') . DIRECTORY_SEPARATOR . $this->page . '.' . $this->outputFormat;
         }
-
         $imageData = $this->getImageData($pathToImage);
+
 
         return file_put_contents($pathToImage, $imageData) !== false;
     }
+
+    public function getImageBlob($pathToImage)
+    {
+        $imageData = $this->getImageData($pathToImage);
+        return $imageData->getimageblob();
+
+    }
+
 
     /**
      * Save the file as images to the given directory.
@@ -240,12 +257,12 @@ class FileToThumbnail
             return $this->getRemoteImageData($pathToImage);
         }
 
-        if($this->thumbnail_width != 0 && $this->thumbnail_height != 0){
-            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, false);
-        }
-
 
         $this->imagick->readImage(sprintf('%s[%s]', $this->file, $this->page - 1));
+
+        if ($this->thumbnail_width != 0 && $this->thumbnail_height != 0) {
+            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, true);
+        }
 
         if (is_int($this->layerMethod)) {
             $this->imagick = $this->imagick->mergeImageLayers($this->layerMethod);
@@ -255,6 +272,7 @@ class FileToThumbnail
 
         return $this->imagick;
     }
+
 
     /**
      * @param int $colorspace
@@ -293,6 +311,10 @@ class FileToThumbnail
 
         $this->imagick->setIteratorIndex($this->page - 1);
 
+        if ($this->thumbnail_width != 0 && $this->thumbnail_height != 0) {
+            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, true);
+        }
+
         if (is_int($this->layerMethod)) {
             $this->imagick = $this->imagick->mergeImageLayers($this->layerMethod);
         }
@@ -319,7 +341,7 @@ class FileToThumbnail
 
         $outputFormat = strtolower($outputFormat);
 
-        if (! $this->isValidOutputFormat($outputFormat)) {
+        if (!$this->isValidOutputFormat($outputFormat)) {
             $outputFormat = 'jpg';
         }
 
