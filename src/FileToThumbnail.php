@@ -347,4 +347,10 @@ class FileToThumbnail
 
         return $outputFormat;
     }
+
+    public function destroy()
+    {
+        $this->imagick->destroy();
+        return true;
+    }
 }
