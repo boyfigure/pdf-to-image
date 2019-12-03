@@ -45,9 +45,14 @@ class FileToThumbnail
             throw new FileDoesNotExist("File `{$file}` does not exist");
         }
 
-        $this->imagick = new Imagick($file);
 
-        $this->numberOfPages = $this->imagick->getNumberImages();
+        $this->imagick = new Imagick();
+        $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_THREAD, 1);
+        $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_AREA, 10000000);
+        $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_MEMORY, 1024000000);
+        $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_MAP, 1024000000);
+
+        $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_DISK, -1);
 
         $this->file = $file;
     }
@@ -237,12 +242,6 @@ class FileToThumbnail
      */
     public function getImageData($pathToImage)
     {
-        /*
-         * Reinitialize imagick because the target resolution must be set
-         * before reading the actual image.
-         */
-        $this->imagick = new Imagick();
-
         $this->imagick->setResolution($this->resolution, $this->resolution);
 
         if ($this->colorspace !== null) {
@@ -312,7 +311,8 @@ class FileToThumbnail
         $this->imagick->setIteratorIndex($this->page - 1);
 
         if ($this->thumbnail_width != 0 && $this->thumbnail_height != 0) {
-            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, true);
+//            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, true);
+            $this->imagick->cropThumbnailImage($this->thumbnail_width, $this->thumbnail_height, true);
         }
 
         if (is_int($this->layerMethod)) {
@@ -348,9 +348,9 @@ class FileToThumbnail
         return $outputFormat;
     }
 
-    public function destroy()
+    public function clear()
     {
-        $this->imagick->destroy();
+        $this->imagick->clear();
         return true;
     }
 }
