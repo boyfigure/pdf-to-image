@@ -34,17 +34,12 @@ class FileToThumbnail
 
     protected $thumbnail_width = 0;
 
-    /**
-     * @param string $file The path or url to the file.
-     *
-     * @throws \Offspring\FileToThumbnail\Exceptions\FileDoesNotExist
-     */
     public function __construct($file)
     {
         if (!filter_var($file, FILTER_VALIDATE_URL) && !file_exists($file)) {
             throw new FileDoesNotExist("File `{$file}` does not exist");
         }
-
+        // Imagick::setRegistry('temporary-path', sys_get_temp_dir());
 
         $this->imagick = new Imagick();
         $this->imagick->setResourceLimit(Imagick::RESOURCETYPE_THREAD, 1);
@@ -71,15 +66,7 @@ class FileToThumbnail
         return $this;
     }
 
-    /**
-     * Set the output format.
-     *
-     * @param string $outputFormat
-     *
-     * @return $this
-     *
-     * @throws \Offspring\FileToThumbnail\Exceptions\InvalidFormat
-     */
+
     public function setOutputFormat($outputFormat)
     {
         if (!$this->isValidOutputFormat($outputFormat)) {
@@ -101,20 +88,7 @@ class FileToThumbnail
         return $this->outputFormat;
     }
 
-    /**
-     * Sets the layer method for Imagick::mergeImageLayers()
-     * If int, should correspond to a predefined LAYERMETHOD constant.
-     * If null, Imagick::mergeImageLayers() will not be called.
-     *
-     * @param int|null
-     *
-     * @return $this
-     *
-     * @throws \Offspring\FileToThumbnail\Exceptions\InvalidLayerMethod
-     *
-     * @see https://secure.php.net/manual/en/imagick.constants.php
-     * @see FileToThumbnail::getImageData()
-     */
+
     public function setLayerMethod($layerMethod)
     {
         if (
@@ -150,15 +124,7 @@ class FileToThumbnail
         return in_array($outputFormat, $this->validOutputFormats);
     }
 
-    /**
-     * Set the page number that should be rendered.
-     *
-     * @param int $page
-     *
-     * @return $this
-     *
-     * @throws \Offspring\FileToThumbnail\Exceptions\PageDoesNotExist
-     */
+
     public function setPage($page)
     {
         if ($page > $this->getNumberOfPages() || $page < 1) {
@@ -297,13 +263,7 @@ class FileToThumbnail
         return $this;
     }
 
-    /**
-     * Return remote raw image data.
-     *
-     * @param string $pathToImage
-     *
-     * @return \Imagick
-     */
+
     protected function getRemoteImageData($pathToImage)
     {
         $this->imagick->readImage($this->file);
@@ -312,7 +272,8 @@ class FileToThumbnail
 
         if ($this->thumbnail_width != 0 && $this->thumbnail_height != 0) {
 //            $this->imagick->thumbnailImage($this->thumbnail_width, $this->thumbnail_height, true, true);
-            $this->imagick->cropThumbnailImage($this->thumbnail_width, $this->thumbnail_height, true);
+//            $this->imagick->cropThumbnailImage($this->thumbnail_width, $this->thumbnail_height, true);
+            $this->imagick->resizeImage($this->thumbnail_width, null, Imagick::FILTER_LANCZOS, 1);
         }
 
         if (is_int($this->layerMethod)) {
